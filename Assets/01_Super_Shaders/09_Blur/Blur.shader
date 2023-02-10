@@ -51,7 +51,7 @@ Shader "Custom/Blur"
                 Out = lerp(Min, Max, randomno);
             }
 
-            //Esta funcion es igual a Unity_RandomRange_float, solo que el parametro out con mismo tipo de dato ya no se usa porque la funcion ahora retornara un float
+            //Esta funcion es igual a Unity_RandomRange_float, solo que esta es de tipo de dato float
             /*
             float Unity_RandomRange(float2 Seed, float Min, float Max)
             {

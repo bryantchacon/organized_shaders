@@ -49,6 +49,7 @@ Shader "Custom/ZTest"
             v2f vert (appdata v)
             {
                 v2f o;
+                // v.vertex.z += _SinTime.w; //Da animacion en Z, debe estar en ambos pases
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 return o;
@@ -85,6 +86,7 @@ Shader "Custom/ZTest"
             vertexOutput vertexShader(vertexInput i)
             {
                 vertexOutput o;
+                // i.vertex.z += _SinTime.w; //Da animacion en Z, debe estar en ambos pases
                 o.vertex = UnityObjectToClipPos(i.vertex);
                 return o;
             }

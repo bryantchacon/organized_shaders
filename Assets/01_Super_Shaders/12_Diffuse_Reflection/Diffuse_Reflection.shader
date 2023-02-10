@@ -39,7 +39,6 @@ Shader "USB/Diffuse_Reflection"
             sampler2D _MainTex;
             float4 _MainTex_ST;
             float _LightInt;
-            float4 _LightColor0; //_LightColor[n] es una variable interna que se refiere al color de la iluminacion en la escena (o sea, el color de la luz), se declara como variable uniforme aqui, sin que provenga de una propiedad
 
             v2f vert (appdata v)
             {
@@ -62,10 +61,9 @@ Shader "USB/Diffuse_Reflection"
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
 
-                fixed3 colorRefl = _LightColor0.rgb; //Para poder usar _LightColor[n](en este caso 0), como primer parametro en la funcion LambertShading() hay que declarar un vector de 3 dimensiones, guardarlo ahi y solo usar sus canales RGB
                 float3 normal = i.normal_world;
                 float3 lightDir = normalize(_WorldSpaceLightPos0.xyz); //_WorldSpaceLightPos[n](en este caso 0), es otra variable interna la cual se refiere a la direccion de la iluminacion en World-Space y a diferencia de _LightColor[n] no es necesario declararla como vector uniforme en el area de variables de coneccion ya que viene inicializada en UnityCG.cginc, asi que se puede usar directamente aqui no sin antes guardarla en una variable de 3 dimensiones, normalizarla y especificar que solo se usaran sus coordenadas xyz
-                half3 diffuse = DiffuseReflection(colorRefl, _LightInt, normal, lightDir);
+                half3 diffuse = DiffuseReflection(UNITY_LIGHTMODEL_AMBIENT, _LightInt, normal, lightDir);
                 col.rgb *= diffuse;
 
                 return col;

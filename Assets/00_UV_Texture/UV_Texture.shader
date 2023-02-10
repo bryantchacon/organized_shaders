@@ -12,7 +12,7 @@ Shader "Custom/UV_Texture"
             "RenderType"="Opaque"
             "Queue"="Geometry"
         }
-        ZWrite Off
+        // ZWrite Off
 
         Pass
         {

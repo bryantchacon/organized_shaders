@@ -50,7 +50,7 @@ Shader "Custom/Outline"
             float _OutSize;
 
             //Funcion que calcula el outline
-            float4 outline(float4 vertexPos, float outSize)
+            float4 Outline(float4 vertexPos, float outSize)
             {
                 float4x4 scale = float4x4
                 (
@@ -68,7 +68,7 @@ Shader "Custom/Outline"
             {
                 v2f o;
                 
-                float4 vertexPos = outline(v.vertex, _OutSize);
+                float4 vertexPos = Outline(v.vertex, _OutSize);
 
                 o.vertex = UnityObjectToClipPos(vertexPos);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);

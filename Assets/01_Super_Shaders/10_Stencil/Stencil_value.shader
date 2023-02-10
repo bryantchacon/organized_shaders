@@ -14,7 +14,7 @@ Shader "USB/Stencil_value"
         Stencil //BOTH
         {
             Ref 2 //Stencil Ref. Valor de referencia que tendra el Stencil Buffer y que tambien tiene el objeto que aplica la mascara para que funcione
-            Comp NotEqual //No renderizara los pixeles del objeto que TENGA ESTE SHADER al verse a travez de otro objeto (shader object), que tenga el mismo valor del Stencil Ref de ESTE SHADER (2) y asignado a su Stencil Buffer con Pass Replace
+            Comp NotEqual //No renderizara los pixeles del objeto que TENGA ESTE SHADER al verse a travez de otro objeto que tenga el mismo valor del Stencil Ref de ESTE SHADER (2) y asignado a su Stencil Buffer con Pass Replace, pero si es Equal lo que hara sera solo ser visible detras del objeto que tenga Pass Replace
             // Pass Keep
         }
 

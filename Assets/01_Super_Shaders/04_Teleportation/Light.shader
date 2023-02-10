@@ -11,7 +11,8 @@ Shader "Custom/Light"
         {
             "Queue"="Transparent"
         }
-        Blend SrcAlpha One //Efecto semitransparente
+        Blend SrcAlpha One //Blend semitransparente
+        ZWrite Off
 
         Pass
         {

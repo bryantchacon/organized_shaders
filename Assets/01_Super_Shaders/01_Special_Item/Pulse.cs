@@ -9,6 +9,6 @@ public class Pulse : MonoBehaviour
     void Update()
     {
         float movement = Mathf.Sin(Time.time * speed);
-        transform.localScale = new Vector3((float)0.6 + movement * scale, (float)0.6 + movement * scale, (float)0.6 + movement * scale);
+        transform.localScale = new Vector3(0.6f + movement * scale, 0.6f + movement * scale, 0.6f + movement * scale);
     }
 }

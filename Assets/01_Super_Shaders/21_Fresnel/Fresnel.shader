@@ -56,7 +56,7 @@ Shader "USB/Fresnel"
             }
 
             //FUNCION PARA CALCULAR EL EFECTO FRESNEL
-            void unity_FresnelEffect_float(float3 normal, float3 viewDir, float power, out float Out) //p. 253-255
+            void FresnelEffect_float(float3 normal, float3 viewDir, float power, out float Out) //p. 253-255
             {
                 Out = pow((1 - saturate(dot(normal, viewDir))), power);
                 /*
@@ -74,7 +74,7 @@ Shader "USB/Fresnel"
                 float3 normal = i.normal_world;
                 float3 viewDir = normalize(_WorldSpaceCameraPos - i.vertex_world); //Calcula la direccion de la vista en World-Space 2/2
                 float fresnel = 0;
-                unity_FresnelEffect_float(normal, viewDir, _FresnelPow, fresnel);
+                FresnelEffect_float(normal, viewDir, _FresnelPow, fresnel);
                 col += fresnel * _FresnelInt * _Color;
 
                 return col;
