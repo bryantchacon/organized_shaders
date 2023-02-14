@@ -8,7 +8,7 @@ Shader "Custom/Magma"
         [Header(DISTORTION PROPERTIES)]
         [Space(10)]
         _DisSpeed ("Speed", Range(-0.4, 0.4)) = 0.1
-        _DisAmplitude ("Amplitude", Range(2, 10)) = 3
+        _DisValue ("Value", Range(2, 10)) = 3
         [Header(WAVE PROPERTIES)]
         [Space(10)]
         _WaveSpeed ("Speed", Range(0, 5)) = 1
@@ -43,7 +43,7 @@ Shader "Custom/Magma"
             float4 _MagmaTex_ST; //Se encarga del tile y offset
 
             float _DisSpeed;
-            float _DisAmplitude;
+            float _DisValue;
 
             float _WaveSpeed;
             float _WaveFrequency;
@@ -67,9 +67,9 @@ Shader "Custom/Magma"
             {
                 half distortion = tex2D(_DisTex, i.uv + (_Time * _DisSpeed)).r; //Guarda la distorcion, samplea la textura de distorcion a las UVs. Para generar movimiento en las UVs se les suma el resultado de tiempo * velocidad porque este es igual a movimiento, y como la variable es de una sola dimension, y la textura es gris, solo se usara el canal r de la operacion
 
-                //Se pasa la distorsion a las uv y se divide entre _DisAmplitude para poder modificar la amplitud desde el inspector
-                i.uv.x += distortion / _DisAmplitude;
-                i.uv.y += distortion / _DisAmplitude;
+                //Se pasa la distorsion a las uv y se divide entre _DisValue para poder modificar la amplitud desde el inspector
+                i.uv.x += distortion / _DisValue;
+                i.uv.y += distortion / _DisValue;
 
                 fixed4 col = tex2D(_MagmaTex, i.uv);
                 return col;

@@ -4,8 +4,8 @@ Shader "USB/TAN_Hologram"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1, 1, 1, 1)
-        _Frequency ("Frequency", Range(1, 30)) = 15
         _Speed ("Speed", Range(0, 5)) = 1
+        _Frequency ("Frequency", Range(1, 30)) = 15
     }
     SubShader
     {
@@ -55,7 +55,7 @@ Shader "USB/TAN_Hologram"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float4 hologram = clamp(0, abs(sin((i.uv.y - _Time.x * _Speed) * _Frequency)) + 0.2, 1) * _Color; //Con tan() da bordes rigidos, con sin() bordes con cierta difuminacion
+                float4 hologram = clamp(0, abs(tan((i.uv.y - _Time.x * _Speed) * _Frequency)) + 0.2, 1) * _Color; //Con tan() da bordes rigidos, con sin() bordes con cierta difuminacion
                 /*
                 1. clamp() limita que los valores que da no sean menores a 0 y mayores a 1
                 2. abs() solo regresa numeros positivos

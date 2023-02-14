@@ -5,7 +5,7 @@ Shader "USB/Sliced_Fruit"
         _MainTex ("Texture", 2D) = "white" {}
         _PlaneTex ("Plane Texture", 2D) = "white" {}
         _Edge ("Edge", Range(-0.5, 0.5)) = 0.0 //Sus valores son tales porque el diametro de la esfera es 1
-        _CircleRad ("Circle Radius", Range(0.0, 0.5)) = 0.45
+        _CircleRad ("Circle Radius", Range(0.4, 0.5)) = 0.45
         _CircleCol ("Circle Color", Color) = (1, 1, 1, 1)
     }
     SubShader

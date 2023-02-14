@@ -74,7 +74,8 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DisAmplitude: 3
-    - _DisSpeed: 0.05
+    - _DisSpeed: 0.1
+    - _DisValue: 3
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -87,9 +88,9 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _WaveAmplitude: 0.2
-    - _WaveFrequency: 0.5
-    - _WaveSpeed: 1
+    - _WaveAmplitude: 0.1
+    - _WaveFrequency: 1
+    - _WaveSpeed: 2
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

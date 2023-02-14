@@ -90,7 +90,7 @@ Shader "Custom/Water"
                 float depth : DEPTH; //Da acceso al depth, es de una sola dimension
             };
 
-            sampler2D _CameraDepthNormalsTexture; //Variable especifica de este pass donde se guardara la textura de profundidad (no proviene de una propiead)
+            sampler2D _CameraDepthNormalsTexture; //Variable especifica de este pass donde se guardara la textura de profundidad (no proviene de una propiead), y debe llamarse asi para que el script Render Depth en la camara pueda acceder a ella
             float _DepthValue;
 
             v2f vert (appdata v)

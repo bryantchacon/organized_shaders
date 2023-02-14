@@ -41,7 +41,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: decdce7dfe9364e43861bf4d988d08ba, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7680b0a5c9671064ba4ae6e07af31446, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -57,13 +57,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _PlaneTex:
-        m_Texture: {fileID: 2800000, guid: d3a237071885ebc4ab9d150688ce24ff, type: 3}
+        m_Texture: {fileID: 2800000, guid: 955bac65ec16af9449a4aeaf98ba12e9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
-    - _CircleRad: 0.47
+    - _CircleRad: 0.45
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -81,7 +81,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _CircleCol: {r: 1, g: 0.7653513, b: 0, a: 1}
+    - _CircleCol: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

@@ -9,8 +9,7 @@ Shader "Custom/Dissolve"
         _DisColor ("Color", Color) = (1, 1, 1, 1)
         _DisSmooth ("Smooth", Range(0.0, 0.2)) = 0
         _DisThreshold ("Threshold", Range(-0.2, 1.2)) = 1
-        [IntRange]
-        _Movement ("Movement", Range(0, 1)) = 0
+        _YMovAmpl ("Y Movement Amplitude", Range(0, 0.2)) = 0
         [IntRange]
         _ThreshdAnim ("Threshold Animation", Range(0, 1)) = 0
     }
@@ -51,18 +50,14 @@ Shader "Custom/Dissolve"
             float4 _DisColor;
             float _DisSmooth;
             float _DisThreshold;
-            float _Movement;
+            float _YMovAmpl;
             float _ThreshdAnim;
 
             v2f vert (appdata v)
             {
                 v2f o;
 
-                //Da animacion en Y, debe ir en ambos pases
-                if(_Movement)
-                {
-                    v.vertex.y += sin(_Time.y) / 7;
-                }
+                v.vertex.y += sin(_Time.y) * _YMovAmpl; //Da movimiento en y, va en ambos pases
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
@@ -72,12 +67,12 @@ Shader "Custom/Dissolve"
             fixed4 frag (v2f i) : SV_Target
             {
                 //NOTA: Estas lineas de codigo se repiten en el segundo pass pero sin el 0.1 en smoothstep(), esto para que los bordes con color y suavisado del efecto (este pass), y el efecto en si (segundo pass), coincidan y quede bien visualmente
-                float dissolve = tex2D(_DisTex, i.uv).r; //Asigna la textura de distorsion al efecto. Generalmente las texturas de distorsion se guardan en un solo canal rgb (en este caso r), por eso la variable es de una sola dimension
+                float dissolve = tex2D(_DisTex, i.uv).r; //Asigna la textura de distorsion por medio de las UVs. Generalmente las texturas de distorsion se guardan en un solo canal rgb (en este caso r), por eso la variable es de una sola dimension
 
-                //Da animacion al Threshold, * 1.2 aumenta la velocidad, Threshold debe valer 0.8 para que la animacion funcione bien, debe ir en ambos pases
+                //Da animacion al Threshold, Threshold debe valer 0.9 para que la animacion funcione bien, debe ir en ambos pases
                 if(_ThreshdAnim)
                 {
-                    _DisThreshold += sin(_Time.y * 1.2);
+                    _DisThreshold += sin(_Time.y);
                 }
 
                 float smooth = smoothstep(_DisThreshold + 0.1, _DisThreshold - _DisSmooth, dissolve); //0.1 es para que el efecto tenga un desface entre este pass y el segundo y en ese desfase aplicar el color del efecto.
@@ -118,18 +113,14 @@ Shader "Custom/Dissolve"
             float4 _MainTex_ST;
             float _DisSmooth;
             float _DisThreshold;
-            float _Movement;
+            float _YMovAmpl;
             float _ThreshdAnim;
 
             v2f vert (appdata v)
             {
                 v2f o;
 
-                //Da animacion en Y, debe ir en ambos pases
-                if(_Movement)
-                {
-                    v.vertex.y += sin(_Time.y) / 7;
-                }
+                v.vertex.y += sin(_Time.y) * _YMovAmpl; //Da movimiento en y, va en ambos pases
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
@@ -140,10 +131,10 @@ Shader "Custom/Dissolve"
             {
                 float dissolve = tex2D(_DisTex, i.uv).r;
 
-                //Da animacion al Threshold, * 1.2 aumenta la velocidad, Threshold debe valer 0.8 para que la animacion funcione bien, debe ir en ambos pases
+                //Da animacion al Threshold, Threshold debe valer 0.9 para que la animacion funcione bien, debe ir en ambos pases
                 if(_ThreshdAnim)
                 {
-                    _DisThreshold += sin(_Time.y * 1.2);
+                    _DisThreshold += sin(_Time.y);
                 }
 
                 float smooth = smoothstep(_DisThreshold, _DisThreshold - _DisSmooth, dissolve);
