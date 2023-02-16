@@ -49,8 +49,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: def9f27387a7aac4c98dd4e5a2ed2f62, type: 3}
-        m_Scale: {x: 12, y: 6}
+        m_Texture: {fileID: 2800000, guid: ffe9b2f6970134c4b9b1959f42fa2814, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}

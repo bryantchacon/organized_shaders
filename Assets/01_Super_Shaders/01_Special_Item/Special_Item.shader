@@ -13,7 +13,7 @@ Shader "Custom/Special_Item"
         [Header(RIM PROPERTIES)]
         [Space(10)]
         _RimColor ("Color", Color) = (1, 1, 1, 1)
-        _RimEffect ("Effect", Range(0, 1.5)) = 1
+        _RimEffect ("Intensity", Range(0, 1.5)) = 1
     }
     SubShader
     {
@@ -53,7 +53,7 @@ Shader "Custom/Special_Item"
             v2f vert (appdata v)
             {
                 v2f o;
-                float3 rotVertex = TotalRotation(v.vertex, _Speed); //Uso de la funcion TotalRotation() antes de UnityObjectToClipPos()
+                float3 rotVertex = TotalRotation(v.vertex, _Speed); //Uso de la funcion TotalRotation() antes de UnityObjectToClipPos(), va en ambos pases
                 o.vertex = UnityObjectToClipPos(rotVertex);
 
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
@@ -111,7 +111,7 @@ Shader "Custom/Special_Item"
             v2f vert (appdata v)
             {
                 v2f o;
-                float3 rotVertex = TotalRotation(v.vertex, _Speed); //Uso de la funcion TotalRotation() antes de UnityObjectToClipPos()
+                float3 rotVertex = TotalRotation(v.vertex, _Speed); //Uso de la funcion TotalRotation() antes de UnityObjectToClipPos(), va en ambos pases
                 o.vertex = UnityObjectToClipPos(rotVertex);
 
                 o.normal = normalize(mul(unity_ObjectToWorld, v.normal)); //Calcula las normales en World-Space

@@ -81,7 +81,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _ThreshdAnim: 0
+    - _ThreshdAnim: 1
     - _UVSec: 0
     - _YMovAmpl: 0
     - _ZWrite: 1
