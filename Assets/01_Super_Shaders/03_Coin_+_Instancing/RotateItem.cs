@@ -7,13 +7,15 @@ public class RotateItem : MonoBehaviour
     // [Range(30, 100)]
     public float speed = 100;
     private float t;
+    private float movement;
 
     void Update()
     {
         if(isRotate)
         {
             t = Time.deltaTime;
-            transform.Rotate(new Vector3(0, speed * t, 0));
+            movement = t * speed;
+            transform.Rotate(new Vector3(movement, movement, movement));
         }
     }
 }
