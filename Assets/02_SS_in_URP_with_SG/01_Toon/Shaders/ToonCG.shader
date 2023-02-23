@@ -82,7 +82,7 @@
             ENDCG
         }   
 
-        //NOTA: Las sombras ya vienen predefinidas en Shader Graph, por lo tanto, no sera necesario configurarlas en el, ademas de que Shader Graph solo puede compilar UN PASS
+        //NOTA: Las sombras ya vienen predefinidas en Shader Graph, por lo tanto, no sera necesario configurarlas en el, ademas de que Shader Graph solo puede compilar UN PASS por graph
         Pass
         {
             Tags
