@@ -67,8 +67,8 @@ Shader "USB/Sliced_Fruit"
                 return exterior;
             }
 
-            //Funcion para calcular el Sphere Casting, o sea, la distancia del objeto a la cámara
-            float sphereCasting(float3 ray_origin, float3 ray_direction)
+            //Funcion Sphere Tracing, o sea, la distancia del objeto a la cámara
+            float SphereTracing(float3 ray_origin, float3 ray_direction)
             /*
             • ray_origin: Punto inicial del rayo, o sea, posicion de la camara en World-Space
             • ray_direction: Posicion de los vertices
@@ -96,7 +96,7 @@ Shader "USB/Sliced_Fruit"
 
                 float3 ray_origin = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1)); //Transforma las coordenadas de la camara a Local-Space
                 float3 ray_direction = normalize(i.hitPos - ray_origin); //Calcula la direccion del rayo
-                float t = sphereCasting(ray_origin, ray_direction); //Uso de la funcion sphereCasting(), guarda la distancia de la fruta respecto a la camara
+                float t = SphereTracing(ray_origin, ray_direction); //Uso de la funcion SphereTracing(), guarda la distancia de la fruta respecto a la camara
 
                 float4 planeCol = 0; //Guarda la texura del plano
                 float4 circleCol = 0; //Guarda el borde del plano, borde del plano 1/5

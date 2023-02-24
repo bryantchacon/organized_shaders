@@ -1,4 +1,4 @@
-Shader "Custom/Squares"
+Shader "Custom/Grid"
 {
     Properties
     {
@@ -54,10 +54,8 @@ Shader "Custom/Squares"
             //     float pivot = _DiagonalPivotPosition; //Pivote, centro desde el cual girara el patron, al cambiar su valor en el inspector permite moverlo
 
             //     //_Time, _CosTime y _SinTime son propios de ShaderLab
-            //     //SE PUEDE JUGAR CON LOS VALORES DE cosAngle Y sinAngle CAMBIANDO LA COORDENADA DE _CosTime y _SinTime PARA TENER DIFERENTES MOVIMIENTOS EN EL PATRON
-            //     // float cosAngle = cos(_Time.y);
-            //     // float sinAngle = sin(_Time.y);
-            //     float cosAngle = _CosTime.w; //Da el mismo resultado que el codigo anterior comentado porque _Time.y = (t) y _CosTime.w tambien
+            //     //SE PUEDE JUGAR CON LOS VALORES DE cosAngle Y sinAngle CAMBIANDO LA COORDENADA DE _CosTime y _SinTime PARA TENER DIFERENTES MOVIMIENTOS EN EL GRID
+            //     float cosAngle = _CosTime.w; //Equivale a cos(_Time.y), _Time.y = tiempo
             //     float sinAngle = _SinTime.w;
 
             //     float2x2 rot = float2x2 //Matriz de tiempos de _CosTime y _SinTime (_Time)

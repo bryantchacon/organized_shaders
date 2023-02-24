@@ -16,7 +16,7 @@ Shader "USB/Instancing"
             #pragma fragment frag
 
             //Hace posible instanciar objetos sin aumentar los draw calls (se agrega en ambos pases en el mismo lugar), paso 1/3
-            //ESTA CONFIGURACION DE SOLO ESTOS 3 PARAMETROS ES LA QUE FUNCIONA BIEN (ADEMAS DE ACTIVAR Enable GPU Instancing Y QUE EL Rendering Path DE LA CAMARA ESTE EN Forward)
+            //Ademas hay que activar Enable GPU Instancing en el inspector del shader y que el Rendering Path de la camara sea Forward
             #pragma multi_compile_instancing
 
             #include "UnityCG.cginc"
