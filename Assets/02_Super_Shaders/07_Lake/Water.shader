@@ -8,8 +8,14 @@ Shader "Custom/Water"
         [Space(10)]
         _DisSpeed ("Speed", Range(-0.4, 0.4)) = 0.1
         _DisValue ("Value", Range(2, 10)) = 3
+        [Header(WAVE PROPERTIES)]
         [Space(10)]
-        _DepthValue ("Depth Value", Range(0, 2)) = 1
+        _WaveSpeed ("Speed", Range(0, 5)) = 1
+        _WaveFrequency ("Frequency", Range(0, 5)) = 1
+        _WaveAmplitude ("Amplitude", Range(0, 1)) = 0.2
+        [Header(DEPTH)]
+        [Space(10)]
+        _DepthValue ("Value", Range(0, 2)) = 1
     }
     SubShader
     {
@@ -45,11 +51,20 @@ Shader "Custom/Water"
             float4 _MainTex_ST;
             float _DisSpeed;
             float _DisValue;
+            float _WaveSpeed;
+            float _WaveFrequency;
+            float _WaveAmplitude;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
+
+                //CALCULOS PARA EL MOVIMIENTO DE LAS OLAS
+                float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
+                o.vertex.y += sin((-worldPos.z + (_Time.y * _WaveSpeed)) * _WaveFrequency) * _WaveAmplitude;
+                o.vertex.y += cos((-worldPos.x + (_Time.y * _WaveSpeed)) * _WaveFrequency) * _WaveAmplitude;
+
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 return o;
             }
@@ -92,11 +107,18 @@ Shader "Custom/Water"
 
             sampler2D _CameraDepthNormalsTexture; //Variable especifica de este pass donde se guardara la textura de profundidad (no proviene de una propiead), y debe llamarse asi para que el script Render Depth en la camara pueda acceder a ella
             float _DepthValue;
+            float _WaveSpeed;
+            float _WaveFrequency;
+            float _WaveAmplitude;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
+
+                float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
+                o.vertex.y += sin((-worldPos.z + (_Time.y * _WaveSpeed)) * _WaveFrequency) * _WaveAmplitude;
+                o.vertex.y += cos((-worldPos.x + (_Time.y * _WaveSpeed)) * _WaveFrequency) * _WaveAmplitude;
 
                 //CALCULOS DE LOS VERTICES DE LA TEXTURA DE PROFUNDIDAD
                 o.uv = ((o.vertex.xy / o.vertex.w) + 1) / 2; //o.vertex.w son las coordenadas homogeneas, que en si equivalen a una copia del plano con una unidad de profundidad (de aqui el + 1), y se divide todo entre 2 para que el efecto de profundidad (proyeccion del depth texture sobre los UVs) quede centrado y vaya hacia el centro del plano
