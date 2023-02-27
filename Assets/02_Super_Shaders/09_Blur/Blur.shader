@@ -40,7 +40,7 @@ Shader "Custom/Blur"
                 float4 uvgrab : TEXCOORD0; //Se usa para almacenar el calculo hecho por ComputeGrabScreenPos() en el vertex shader, sustituye la variable uv de dos dimensiones porque el resultado de la funcion es de 4, y debido a todo lo anterior solo se usa aqui en el vertex output, paso 3/6
             };
 
-            sampler2D _BackgroundTexture; //Sampler de la textura generada en el GrabPass, debido a esto, no tiene una propiedad de la que provenga, paso 2/6
+            sampler2D _BackgroundTexture; //Sampler de la textura generada en el GrabPass, debido a esto no tiene una propiedad de la que provenga, paso 2/6
             float4 _Color;
             float _Blur;
 
@@ -70,9 +70,9 @@ Shader "Custom/Blur"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float2 projuv = i.uvgrab.xy / i.uvgrab.w; //Equivale a: fixed4 col = tex2Dproj(_BackgroundTexture, i.uvgrab);
+                float2 projuv = i.uvgrab.xy / i.uvgrab.w; //Equivale a fixed4 col = tex2Dproj(_BackgroundTexture, i.uvgrab);
                 fixed4 col = 0;
-                
+
                 float noise = 0; //Se usa como output de Unity_RandomRange_float()
                 Unity_RandomRange_float(i.uvgrab, 0, 1, noise);
 
