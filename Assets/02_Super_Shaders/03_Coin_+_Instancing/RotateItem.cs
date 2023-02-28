@@ -15,7 +15,7 @@ public class RotateItem : MonoBehaviour
         {
             t = Time.deltaTime;
             movement = t * speed;
-            transform.Rotate(new Vector3(movement, movement, movement));
+            transform.Rotate(new Vector3(0, movement, 0));
         }
     }
 }
