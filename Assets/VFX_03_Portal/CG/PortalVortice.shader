@@ -14,6 +14,7 @@ Shader "VFX/PortalVortice"
             "RenderType"="Opaque"
             "Queue"="Transparent+2"
         }
+        ZWrite Off //Desactiva el zbuffer
         ZTest Greater //Renderiza el objeto solo cuando esta detras de otros, se complementa con "Queue"="Transparent+2"
         Blend SrcAlpha One //Blend aditivo
         Cull Front //Hace que solo se renderice la cara frontal

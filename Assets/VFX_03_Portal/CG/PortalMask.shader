@@ -11,7 +11,7 @@ Shader "VFX/PortalMask"
             "RenderType"="Opaque"
             "Queue"="Transparent"
         }
-        Blend SrcAlpha OneMinusSrcAlpha
+        Blend SrcAlpha OneMinusSrcAlpha //Blend normal
         AlphaToMask On //Indica que el obteto que tenga este shader funcionara como una mascara, evitando que lo que enmascara se renderice en el area del aplha de la mascara
         LOD 100
 

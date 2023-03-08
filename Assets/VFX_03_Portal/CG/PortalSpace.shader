@@ -3,6 +3,7 @@ Shader "VFX/PortalSpace"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _Speed ("Speed", Range(0, 1)) = -0.5
     }
     SubShader
     {
@@ -11,9 +12,9 @@ Shader "VFX/PortalSpace"
             "RenderType"="Opaque"
             "Queue"="Transparent+1"
         }
-        ZWrite Off
-        ZTest Greater
-        Blend SrcAlpha OneMinusSrcAlpha
+        ZWrite Off //Desactiva el zbuffer
+        ZTest Greater //Renderiza el objeto solo cuando esta detras de otros, se complementa con "Queue"="Transparent+1"
+        Blend SrcAlpha OneMinusSrcAlpha //Blend normal
         Cull Front
         LOD 100
 
@@ -39,6 +40,7 @@ Shader "VFX/PortalSpace"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            float _Speed;
 
             v2f vert (appdata v)
             {
@@ -50,7 +52,7 @@ Shader "VFX/PortalSpace"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv);
+                fixed4 col = tex2D(_MainTex, i.uv + (_Time.y * _Speed));
                 return col;
             }
             ENDCG
