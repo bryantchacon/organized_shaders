@@ -17,7 +17,7 @@ Shader "VFX/PortalVortice"
         ZWrite Off //Desactiva el zbuffer
         ZTest Greater //Renderiza el objeto solo cuando esta detras de otros, se complementa con "Queue"="Transparent+2"
         Blend SrcAlpha One //Blend aditivo
-        Cull Front //Hace que solo se renderice la cara frontal
+        Cull Front //Solo renderiza las caras internas
         LOD 100
 
         Pass
