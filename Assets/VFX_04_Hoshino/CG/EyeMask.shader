@@ -49,7 +49,9 @@ Shader "VFX/EyeMask"
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_Mask, i.uv);
-                return float4(0, 0, 0, col.a); //Retorna como textura un color negro si no se usa una textura y como alpha el alpha de la textura
+                //NOTA: Este codigo se usa cuando el fondo de la mascara va a ser un espacio 3D, si no, basta con retornar col normalmente
+                // return float4(0, 0, 0, col.a); //Retorna  color negro si no se usa una textura y como alpha el alpha de la mascara
+                return col;
             }
             ENDCG
         }

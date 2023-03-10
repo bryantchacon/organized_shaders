@@ -1,8 +1,8 @@
-Shader "VFX/PupilMask"
+Shader "VFX/EyeStars"
 {
     Properties
     {
-        _Mask ("Texture", 2D) = "white" {}
+        _MainTex ("Texture", 2D) = "white" {}
     }
     SubShader
     {
@@ -13,9 +13,7 @@ Shader "VFX/PupilMask"
         }
         ZWrite Off //Desactiva el zbuffer
         ZTest Greater //Renderiza el objeto solo cuando esta detras de otros, se complementa con "Queue"="Transparent+2"
-        Cull Front
-        Blend SrcAlpha OneMinusSrcAlpha //Blend normal
-        AlphaToMask On //Indica que el obteto que tenga este shader funcionara como una mascara, evitando que lo que enmascara se renderice en el area del aplha de la mascara
+        Blend SrcAlpha One //Blend aditivo
         LOD 100
 
         Pass
@@ -30,29 +28,32 @@ Shader "VFX/PupilMask"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+                float4 color : COLOR;
             };
 
             struct v2f
             {
                 float4 vertex : SV_POSITION;
                 float2 uv : TEXCOORD0;
+                float4 color : COLOR;
             };
 
-            sampler2D _Mask;
-            float4 _Mask_ST;
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _Mask);
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.color = v.color;
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_Mask, i.uv);
-                return float4(0, 0, 0, col.a); //Retorna como textura un color negro y como alpha el alpha de la textura
+                fixed4 col = tex2D(_MainTex, i.uv);
+                return col * i.color; //Multiplicar el input de color por la textura hace posible poder cambiar el color desde el particle system
             }
             ENDCG
         }
