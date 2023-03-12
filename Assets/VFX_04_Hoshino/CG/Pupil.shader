@@ -3,12 +3,17 @@ Shader "VFX/Pupil"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Color ("Color", Color) = (1, 1, 1, 1)
         _Intencity ("Intencity", Range(0, 1)) = 1
         [Header(OUTLINE PROPERTIES)]
         [Space(10)]
         _OutColor ("Color", Color) = (1, 1, 1, 1)
         _OutSize ("Size", Range(0.0, 0.2)) = 0.1
+        [Header(GRADIENT PROPERTIES)]
+        [Space(10)]
+        _Color ("Color", Color) = (1, 1, 1, 1)
+        _Radius ("Radius", Range(0.0, 0.5)) = 0.3
+        _Center ("Center", Range(0, 1)) = 0.5
+        _Smooth ("Smooth", Range(0.0, 0.5)) = 0.01
     }
     SubShader
     {
@@ -38,6 +43,7 @@ Shader "VFX/Pupil"
             #pragma fragment frag
 
             #include "UnityCG.cginc"
+            #include "Assets/CGFiles/LocalFunctionsCG.cginc"
 
             struct appdata
             {
@@ -56,6 +62,9 @@ Shader "VFX/Pupil"
             float _Intencity;
             float4 _OutColor;
             float _OutSize;
+            float _Radius;
+            float _Center;
+            float _Smooth;
 
             //Funcion para calcular el outline
             float4 Outline(float4 vertexPos, float outSize)
@@ -85,8 +94,11 @@ Shader "VFX/Pupil"
 
             fixed4 frag (v2f i) : SV_Target
             {
+                float cirGrad = circle(i.uv, _Center, _Radius, _Smooth);
+
                 fixed4 col = tex2D(_MainTex, i.uv); //La asignacion de la textura no se elimina porque...
-                return float4(_OutColor.rgb, col.a * i.uv.y * _Intencity); //... se usara su canal alpha para que el outline tenga la forma del objeto y se pueda renderizar a su alrededor
+                col *= fixed4(cirGrad.xxx, 1);
+                return fixed4(col.rgb * _OutColor.rgb, col.a * _Intencity); //... se usara su canal alpha para que el outline tenga la forma del objeto y se pueda renderizar a su alrededor
             }
             ENDCG
         }
@@ -100,6 +112,7 @@ Shader "VFX/Pupil"
             #pragma fragment frag
 
             #include "UnityCG.cginc"
+            #include "Assets/CGFiles/LocalFunctionsCG.cginc"
 
             struct appdata
             {
@@ -117,6 +130,9 @@ Shader "VFX/Pupil"
             float4 _MainTex_ST;
             float4 _Color;
             float _Intencity;
+            float _Radius;
+            float _Center;
+            float _Smooth;
 
             v2f vert (appdata v)
             {
@@ -128,8 +144,11 @@ Shader "VFX/Pupil"
 
             fixed4 frag (v2f i) : SV_Target
             {
+                float cirGrad = circle(i.uv, _Center, _Radius, _Smooth);
+
                 fixed4 col = tex2D(_MainTex, i.uv);
-                return fixed4(col.rgb * _Color.rgb, col.a * i.uv.y * _Intencity);
+                col *= fixed4(cirGrad.xxx, 1);
+                return fixed4(col.rgb * _Color.rgb, col.a * _Intencity);
             }
             ENDCG
         }

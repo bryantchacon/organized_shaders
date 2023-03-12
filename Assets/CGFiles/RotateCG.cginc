@@ -1,6 +1,7 @@
 //ESTE TIPO DE ARCHIVO ES PARA PODER LLAMAR DESDE CUALQUIER SHADER CUALQUIER FUNCION QUE ESTE CONTENGA
 
 //if para definir un archivo .cginc, dentro de este iran todas las funciones
+//NOTA: NO FUNCIONA SI NO LLEVA CG AL FINAL DEL NOMBRE
 #ifndef RotateCG //Si RotateCG (este archivo), no esta definido...
 #define RotateCG //... definelo
 
@@ -22,9 +23,9 @@ float2 Rotate(float2 uv, float center)
         sinAngle, cosAngle
     );
 
-    float2 uvPiv = uv - pivot; //Argega el pivote a las UVs
+    float2 uvPiv = uv - pivot; //Asigna el pivote de las UVs
 
-    float2 uvRot = mul(rot, uvPiv); //Multiplica la matriz de tiempos por las UVs con el pivote agregado, esto para poder hacer la rotacion
+    float2 uvRot = mul(rot, uvPiv); //Multiplica la matriz de tiempos por las UVs con el pivote asignado para poder hacer la rotacion
 
     return uvRot;
 }

@@ -76,7 +76,7 @@ Shader "Custom/Grid"
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = Rotate(v.uv, _DiagonalPivotPosition); //Uso de la funcion Rotate(), que ahora se llama desde RotateCG
+                o.uv = Rotate(v.uv, _DiagonalPivotPosition); //Uso de la funcion Rotate() despues de UnityObjectToClipPos(), que ahora se llama desde RotateCG
                 return o;
             }
 
