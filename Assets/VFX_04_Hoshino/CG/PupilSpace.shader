@@ -3,8 +3,10 @@ Shader "VFX/PupilSpace"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Speed ("Speed" , Range(-8, 8)) = 8
-        [HideInInspector] _Center ("Center", Range(0, 1)) = 0.5
+        _FirstGradCol ("First Gradient Color", Color) = (1, 1, 1, 1)
+        _SecondGradCol ("Second Gradient Color", Color) = (1, 1, 1, 1)
+        // _Edge ("Edge", Range(0, 1)) = 0.5
+        // _Smooth ("Smooth", Range(0.0, 0.3)) = 0.1
     }
     SubShader
     {
@@ -21,12 +23,70 @@ Shader "VFX/PupilSpace"
 
         Pass
         {
+            Name "ColorPass"
+
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
 
             #include "UnityCG.cginc"
-            #include "Assets/CGFiles/LocalFunctionsCG.cginc"
+
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
+                float4 color : COLOR;
+            };
+
+            struct v2f
+            {
+                float4 vertex : SV_POSITION;
+                float2 uv : TEXCOORD0;
+                float4 color : COLOR;
+            };
+
+            // sampler2D _MainTex;
+            // float4 _MainTex_ST;
+            float4 _FirstGradCol;
+            float4 _SecondGradCol;
+            // float _Edge;
+            // float _Smooth;
+
+            v2f vert (appdata v)
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                // o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.uv = v.uv;
+                
+                // float edge = _Edge; //Indica a que altura estara el edge, paso 1/5
+                // float smooth = _Smooth; //Intensidad de la difuminacion del edge, paso 2/5
+                // fixed3 sstep = 0; //Variable donde se guardara el edge ya generado, paso 3/5
+                // sstep = smoothstep((o.uv.y - smooth), (o.uv.y + smooth), edge);
+
+                //NOTA: Al asignar dos colores como lerp a las UVs estos automaticamente se muestran como un degradado de uno a otro porque asi son las UVs y no de forma lineal como en las texturas, asi que no hay necesidad de aplicar smoothstep()
+                o.color = lerp(_FirstGradCol, _SecondGradCol, o.uv.y); //Optimizacion de hacer que el calculo del color sea en el vertex shader en lugar del fragment shader
+                return o;
+            }
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                // fixed4 col = tex2D(_MainTex, i.uv);
+                // return col * i.color;
+                return i.color;
+            }
+            ENDCG
+        }
+
+        Pass
+        {
+            Name "TexturePass"
+            
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+
+            #include "UnityCG.cginc"
 
             struct appdata
             {
@@ -42,21 +102,17 @@ Shader "VFX/PupilSpace"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            float _Speed;
-            float _Center;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.uv = Rotate2D(v.uv, _Center, _Speed);
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // fixed4 col = tex2D(_MainTex, i.uv + (_Time.y * _Speed));
                 fixed4 col = tex2D(_MainTex, i.uv);
                 return col;
             }

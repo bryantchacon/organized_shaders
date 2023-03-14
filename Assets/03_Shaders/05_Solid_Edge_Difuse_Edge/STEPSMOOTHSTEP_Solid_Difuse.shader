@@ -3,12 +3,16 @@ Shader "USB/STEPSMOOTHSTEP_Solid_Difuse"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _Color ("Color", Color) = (1, 1, 1, 1)
         _Edge ("Edge Location", Range(0, 1)) = 0.5
         _Smooth ("Smooth Intensity", Range(0.0, 0.3)) = 0.1
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags
+        {
+            "RenderType"="Opaque"
+        }
         LOD 100
 
         Pass
@@ -35,6 +39,7 @@ Shader "USB/STEPSMOOTHSTEP_Solid_Difuse"
             float4 _MainTex_ST;
             float _Edge;
             float _Smooth;
+            float4 _Color;
 
             v2f vert (appdata v)
             {
@@ -57,7 +62,7 @@ Shader "USB/STEPSMOOTHSTEP_Solid_Difuse"
                 float edge = _Edge; //Indica a que altura estara el edge, paso 1/5
                 float smooth = _Smooth; //Intensidad de la difuminacion del edge, paso 2/5
                 fixed3 sstep = 0; //Variable donde se guardara el edge ya generado, paso 3/5
-                sstep = smoothstep((i.uv.y - smooth), (i.uv.y + smooth), edge); //Aplica el suavisado del edge con smoothstep() sobre la coordenada v (por .y), paso 4/5
+                sstep = smoothstep((i.uv.y - smooth) * _Color, (i.uv.y + smooth), edge); //Aplica el suavisado del edge con smoothstep() sobre la coordenada v (por .y), paso 4/5
 
                 col *= fixed4(sstep, 1); //Retorna el efecto guardado en sstep y 1 para el canal aplha, paso 4/4 de step() y 5/5 de smoothstep()
 
