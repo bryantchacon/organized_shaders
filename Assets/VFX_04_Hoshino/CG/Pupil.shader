@@ -4,11 +4,11 @@ Shader "VFX/Pupil"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Intencity ("Intencity", Range(0, 1)) = 1
-        [Header(OUTLINE PROPERTIES)]
+        [Header(OUTLINE)]
         [Space(10)]
         _OutColor ("Color", Color) = (1, 1, 1, 1)
         _OutSize ("Size", Range(0.0, 0.2)) = 0.1
-        [Header(GRADIENT PROPERTIES)]
+        [Header(GRADIENT)]
         [Space(10)]
         _Color ("Color", Color) = (1, 1, 1, 1)
         _Radius ("Radius", Range(0.0, 0.5)) = 0.3
