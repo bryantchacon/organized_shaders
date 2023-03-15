@@ -1,19 +1,20 @@
-Shader "VFX/EyeStars"
+Shader "VFX/Yellow"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _Color ("Color", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
         Tags
         {
             "RenderType"="Opaque"
-            "Queue"="Transparent+3"
+            "Queue"="Transparent+5"
         }
         ZWrite Off //Desactiva el zbuffer
-        ZTest Greater //Renderiza el objeto solo cuando esta detras de otros, se complementa con "Queue"="Transparent+3"
-        Blend SrcAlpha One //Blend aditivo
+        ZTest Less //Renderiza el objeto solo cuando esta por delante de otros, se complementa con "Queue"="Transparent+5"
+        Cull Back
         LOD 100
 
         Pass
@@ -28,32 +29,30 @@ Shader "VFX/EyeStars"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
-                float4 color : COLOR;
             };
 
             struct v2f
             {
                 float4 vertex : SV_POSITION;
                 float2 uv : TEXCOORD0;
-                float4 color : COLOR;
             };
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            float4 _Color;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.color = v.color;
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
-                return col * i.color; //Multiplicar el input de color por la textura hace posible poder cambiar el color desde el particle system
+                return col * _Color;
             }
             ENDCG
         }

@@ -1,4 +1,4 @@
-Shader "VFX/EyeStars"
+Shader "Unlit/UnlitShader"
 {
     Properties
     {
@@ -6,14 +6,7 @@ Shader "VFX/EyeStars"
     }
     SubShader
     {
-        Tags
-        {
-            "RenderType"="Opaque"
-            "Queue"="Transparent+3"
-        }
-        ZWrite Off //Desactiva el zbuffer
-        ZTest Greater //Renderiza el objeto solo cuando esta detras de otros, se complementa con "Queue"="Transparent+3"
-        Blend SrcAlpha One //Blend aditivo
+        Tags { "RenderType"="Opaque" }
         LOD 100
 
         Pass
@@ -21,6 +14,8 @@ Shader "VFX/EyeStars"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            // make fog work
+            #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
 
@@ -28,14 +23,13 @@ Shader "VFX/EyeStars"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
-                float4 color : COLOR;
             };
 
             struct v2f
             {
-                float4 vertex : SV_POSITION;
                 float2 uv : TEXCOORD0;
-                float4 color : COLOR;
+                UNITY_FOG_COORDS(1)
+                float4 vertex : SV_POSITION;
             };
 
             sampler2D _MainTex;
@@ -46,14 +40,17 @@ Shader "VFX/EyeStars"
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.color = v.color;
+                UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
+                // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
-                return col * i.color; //Multiplicar el input de color por la textura hace posible poder cambiar el color desde el particle system
+                // apply fog
+                UNITY_APPLY_FOG(i.fogCoord, col);
+                return col;
             }
             ENDCG
         }

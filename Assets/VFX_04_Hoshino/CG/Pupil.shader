@@ -20,10 +20,10 @@ Shader "VFX/Pupil"
         Tags
         {
             "RenderType"="Opaque"
-            "Queue"="Transparent+3"
+            "Queue"="Transparent+4"
         }
         ZWrite Off //Desactiva el zbuffer
-        ZTest Greater //Renderiza el objeto solo cuando esta detras de otros, se complementa con "Queue"="Transparent+3"
+        ZTest Greater //Renderiza el objeto solo cuando esta detras de otros, se complementa con "Queue"="Transparent+4"
         Blend SrcAlpha One //Blend aditivo
         Cull Back
         LOD 100
